@@ -8,10 +8,10 @@
                     │                                                             │
                     │  Base snapshot: kernel + agent (clean state)                │
                     │                                                             │
-                    │  Pool (OnDemand restore from base, ~25ms each):            │
-                    │    VM-1: agent ready, 6 MB idle RSS ✓                      │
-                    │    VM-2: agent ready, 6 MB idle RSS ✓                      │
-                    │    VM-3: agent ready, 6 MB idle RSS ✓                      │
+                    │  Pool (OnDemand restore from base, ~25ms each):             │
+                    │    VM-1: agent ready, 6 MB idle RSS ✓                       │
+                    │    VM-2: agent ready, 6 MB idle RSS ✓                       │
+                    │    VM-3: agent ready, 6 MB idle RSS ✓                       │
                     │                                                             │
                     │  Warm workload snapshots (via shadow VMs):                  │
                     │    python-runtime: warm ✓                                   │
@@ -25,26 +25,26 @@
                     │                                                             │
   containerd        │  Pod Network Namespace                                      │
      │              │                                                             │
-     │ ttrpc        │  ┌──────┐  TC redirect  ┌──────┐                           │
+     │ ttrpc        │  ┌──────┐  TC redirect  ┌──────┐                            │
      │              │  │ veth ├──────────────►│ TAP  │                            │
      │              │  │(eth0)│◄──────────────┤      │                            │
-     ▼              │  └───┬──┘               └──┬───┘                           │
+     ▼              │  └───┬──┘               └──┬───┘                            │
   ┌──────────┐      │      │ IP flushed          │ virtio-net                     │
-  │  shim    ├──────┤      │ (VM owns pod IP)    │                               │
-  │  ~1300   │      │  ┌───┴─────────────────────┴────────────────────────────┐  │
-  │  lines   │      │  │  cloud-hypervisor (VMM)                              │  │
-  │          │      │  │  ┌─────────────────────────────────────────────┐     │  │
-  │ • TAP    │      │  │  │  Guest VM (custom kernel)                   │     │  │
-  │ • erofs  │      │  │  │                                             │     │  │
-  │ • daemon │      │  │  │  eth0 ← ConfigureNetwork RPC                │     │  │
-  │   RPCs   │      │  │  │                                             │     │  │
-  └────┬─────┘      │  │  │  ┌───────────┐     ┌──────┐                │     │  │
-       │ vsock      │  │  │  │   Agent   │────►│ crun │ (containers)   │     │  │
-       │            │  │  │  │  (PID 1)  │     └──────┘                │     │  │
-       └────────────┤  │  │  └───────────┘                             │     │  │
-                    │  │  └─────────────────────────────────────────────┘     │  │
-                    │  └──────────────────────────────────────────────────────┘  │
-                    └───────────────────────────────────────────────────────────────┘
+  │  shim    ├──────┤      │ (VM owns pod IP)    │                                │
+  │  ~1300   │      │  ┌───┴─────────────────────┴────────────────────────────┐   │
+  │  lines   │      │  │  cloud-hypervisor (VMM)                              │   │
+  │          │      │  │  ┌─────────────────────────────────────────────┐     │   │
+  │ • TAP    │      │  │  │  Guest VM (custom kernel)                   │     │   │
+  │ • erofs  │      │  │  │                                             │     │   │
+  │ • daemon │      │  │  │  eth0 ← ConfigureNetwork RPC                │     │   │
+  │   RPCs   │      │  │  │                                             │     │   │
+  └────┬─────┘      │  │  │  ┌───────────┐     ┌──────┐                 │     │   │
+       │ vsock      │  │  │  │   Agent   │────►│ crun │ (containers)    │     │   │
+       │            │  │  │  │  (PID 1)  │     └──────┘                 │     │   │
+       └────────────┤  │  │  └───────────┘                              │     │   │
+                    │  │  └─────────────────────────────────────────────┘     │   │
+                    │  └──────────────────────────────────────────────────────┘   │
+                    └─────────────────────────────────────────────────────────────┘
 ```
 
 ## Components
